@@ -30,12 +30,12 @@ function modelLoaded() {
 
 function draw() {
     background(200);
-    image(capture,0,0,400,400);
+    image(capture,0,0,);
     fill(0,0,255);
     
     if(singlepose) {
         for(let i=0; i<singlepose.keypoints.length; i++) {
-            ellipse(singlepose.keypoints[i].position.x, singlepose.keypoints[i].position.y, 10,10);
+            ellipse(singlepose.keypoints[i].position.x, singlepose.keypoints[i].position.y, 10);
         }
 
         stroke(255,255,255);
