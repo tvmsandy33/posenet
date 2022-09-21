@@ -1,48 +1,56 @@
 let capture;
 let posenet;
-let noseX, noseY;
-let singlepose;
-let skeleton;
+
+let singlePose,skeleton;
+
 
 function setup() {
-    createCanvas(800,500);
-    capture = createCapture(VIDEO);
+    createCanvas(800, 500);
+    capture = createCapture(VIDEO)
     capture.hide();
 
     posenet = ml5.poseNet(capture, modelLoaded);
-    posenet.on('pose', receivedPoses);
+    posenet.on('pose',receivedPoses);
+
+
 
 }
 
-function receivedPoses(poses) {
+function receivedPoses(poses){
     console.log(poses);
 
     if(poses.length > 0){
-        singlepose = poses[0].pose;
+        singlePose = poses[0].pose;
         skeleton = poses[0].skeleton;
-
     }
 }
 
 function modelLoaded() {
-    console.log('model has loaded');
+    console.log('Model has loaded');
 }
 
 function draw() {
-    background(200);
-    image(capture,0,0,);
-    fill(0,0,255);
-    
-    if(singlepose) {
-        for(let i=0; i<singlepose.keypoints.length; i++) {
-            ellipse(singlepose.keypoints[i].position.x, singlepose.keypoints[i].position.y, 10);
-        }
 
+    // images and videos(webcam)
+    image(capture, 0, 0);
+    fill(255,0,0);
+
+    if(singlePose){
+        for(let i=0; i<singlePose.keypoints.length; i++){
+            ellipse(singlePose.keypoints[i].position.x, singlePose.keypoints[i].position.y,20);
+        }
         stroke(255,255,255);
         strokeWeight(5);
-        for(let j=0; j<skeleton.length; j++) {
-            p5.line(skeleton[j][0].x,skeleton[j][0].y,skeleton[j][1].x,skeleton[j][1].y);
+        for(let j=0; j<skeleton.length; j++){
+            line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y)
         }
+
+        //image(specs,singlePose.nose.x-35,singlePose.nose.y-50,80,80);
+        //image(smoke,singlePose.nose.x-35,singlePose.nose.y+10,40,40);
+
+        
     }
+
     
+
 }
